@@ -6,7 +6,7 @@
   
     Check the setup.py, make sure the include path and lib path of cuda&cublas are correct
     
-    python setup.py build_ext --inplace
+    python pdg_setup.py build_ext --inplace
     
   (b) Test
   
