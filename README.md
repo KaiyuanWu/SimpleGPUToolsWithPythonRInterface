@@ -1,4 +1,4 @@
-# SimpleGPUToolsWithPythonRInterfce
+# SimpleGPUToolsWithPythonRInterface
 
 1. PairWise Distance Calculation
 
