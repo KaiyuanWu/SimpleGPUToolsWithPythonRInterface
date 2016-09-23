@@ -12,9 +12,9 @@
   
     import pairwise_distance_gpu as pdg
     
-    x = np.random.randn(100,3000)
+    x = np.random.randn(100,3000).astype('float32')
     
-    y = np.zeros((100,100))
+    y = np.zeros((100,100)).astype('float32')
     
     pdg.pairwise_dist_gpu(x,y)
     
