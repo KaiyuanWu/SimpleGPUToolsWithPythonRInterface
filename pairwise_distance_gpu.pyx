@@ -25,4 +25,4 @@ def pairwise_dist_gpu2(np.ndarray[np.float32_t,ndim=2, mode="c"] X,np.ndarray[np
 	xncols = X.shape[1]
 	ynrows = Y.shape[0]
 	yncols = Y.shape[1]
-	return pairwise_distance_gpu2(<float*> X.data, xnrows, xncols, <float*> Y.data, ynrows, yncols, <float*> dist.data)
+	return pairwise_distance_gpu2( <float*> Y.data, ynrows, yncols, <float*> X.data, xnrows, xncols, <float*> dist.data)
