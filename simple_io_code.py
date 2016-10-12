@@ -1,12 +1,3 @@
-# -*- coding: utf-8 -*-
-# 将图片数据存储到leveldb中
-import cv2
-import numpy as np
-import leveldb
-import logging
-import struct
-FORMAT = '%(asctime)-15s  %(message)s'
-logging.basicConfig(format=FORMAT)
 #filename是一个列表文件，里面包含需要存储的图片列表     
 #idx id image_filename additional_label
 def cvt_data_to_leveldb(filename,  leveldb_dir, addtional_label_length=0):
@@ -18,15 +9,15 @@ def cvt_data_to_leveldb(filename,  leveldb_dir, addtional_label_length=0):
         id = int(fields[1])
         image_filename = fields[2]
         if addtional_label_length > 0:
-            addtional_label = np.array([float(i) for i in fields[3:]])
+            addtional_label = np.array([float(i) for i in fields[3:]], dtype = 'float32')
         try:
             img = cv2.imread(image_filename)
             h,w,c = img.shape
             img_str = img.tostring()
             if addtional_label_length > 0:
                 addtional_label_str = addtional_label.tostring()
-                fmt="i%dsiii%ds%ds"%(len(img_str),len(addtional_label_str),len(image_filename))
-                value = struct.pack(fmt, id, img_str,h,w,c, addtional_label_str, image_filename)
+                fmt="i%dsiii%dsi%ds"%(len(img_str),len(addtional_label_str),len(image_filename))
+                value = struct.pack(fmt, id, img_str,h,w,c, addtional_label_str,addtional_label_length, image_filename)
             else:
                 fmt="i%dsiii%ds"%(len(img_str),len(image_filename))
                 value = struct.pack(fmt, id, img_str,h,w,c,  image_filename)
@@ -46,10 +37,14 @@ def test_read_leveldb(leveldb_dir, with_additional_label = False):
         value = db.Get(key)
         idx, fmt = key.split('_')
         if with_additional_label:
-            id, img_str,h,w,c, addtional_label_str, image_filename = struct.unpack(fmt, value)
+            id, img_str,h,w,c, addtional_label_str, addtional_label_length, image_filename = struct.unpack(fmt, value)
         else:
             id, img_str,h,w,c,  image_filename = struct.unpack(fmt, value)
-        print(id, h,w,c, image_filename)        
+        print(id, h,w,c, image_filename)  
+        if with_additional_label:
+            addtional_label = np.zeros(addtional_label_length, dtype = 'float32')
+            addtional_label.data[:] = addtional_label_str
+            print('addtional_label = ',addtional_label)
         img = np.zeros((h,w,c), dtype='uint8')
         img.data[:] = img_str
         cv2.imshow('img', img)
