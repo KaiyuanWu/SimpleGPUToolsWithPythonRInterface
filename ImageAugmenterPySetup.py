@@ -12,7 +12,7 @@ ext_modules = [Extension(
     language="c++",
     # libraries=
     # extra_compile_args = "...".split(),
-    extra_link_args = " -lopencv_core -lopencv_highgui -lopencv_imgproc".split()
+    extra_link_args = "-L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc".split()
     )]
 print(ext_modules[0])    
 
