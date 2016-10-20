@@ -6,8 +6,8 @@ from Cython.Distutils import build_ext
 
 ext_modules = [Extension(
     name="pairwise_distance_gpu",
-    sources=["pairwise_distance_gpu.pyx", "pairwise_distance.cpp"],
-        # extra_objects=["fc.o"],  # if you compile fc.cpp separately
+    sources=["pairwise_distance_gpu.pyx"],
+    extra_objects=["pairwise_distance.o"],  # if you compile fc.cpp separately
     include_dirs = [numpy.get_include(), '/usr/local/cuda-7.5/include/'],  # .../site-packages/numpy/core/include
     language="c++",
         # libraries=
