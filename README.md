@@ -30,3 +30,13 @@
     print(x,y)
     
     print(dist)
+
+
+2. Image Augment
+
+  (a) Build Step
+    
+     g++ -fPIC -std=c++11 -c img_aug.cpp -o img_aug.o
+     
+     python ImageAugmenterPySetup.py  build_ext --inplace
+     
