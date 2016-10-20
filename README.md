@@ -40,3 +40,16 @@
      
      python ImageAugmenterPySetup.py  build_ext --inplace
      
+  (b) Test
+  
+  Test code piece
+  
+  import cv2
+  import ImageAugmenterPy
+  img = cv2.imread('/tmp/test/test.jpg')
+  args = {'data_shape':(3, 100,100)}
+  aug_img = ImageAugmenterPy.augment_img_process(img,args=args)
+  print(aug_img.shape)
+  cv2.imshow("aug_img", aug_img)
+  cv2.waitKey()
+     
